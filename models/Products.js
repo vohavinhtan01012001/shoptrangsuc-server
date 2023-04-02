@@ -45,5 +45,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     });
+    Products.associate = (models) => {
+        Products.hasMany(models.Carts, {
+            onDelete: "cascade"
+        });
+    }
+    Products.associate = (models) => {
+        Products.belongsTo(models.Categorys, {
+            onDelete: "cascade",
+            foreignKey: 'CategoryId' 
+        });
+    }
     return Products;
 }

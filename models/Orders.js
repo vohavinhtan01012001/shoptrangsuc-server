@@ -1,10 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("Users", {
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        email: {
+    const Order = sequelize.define("Orders", {
+        orderID: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -20,15 +16,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        role: {
-            type: DataTypes.NUMBER,
+        note: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        status: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     });
-    User.associate = (models) => {
-        User.hasMany(models.Carts, {
-            onDelete: "cascade"
-        });
-    }
-    return User;
+    return Order;
 }

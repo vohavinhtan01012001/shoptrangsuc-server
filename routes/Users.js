@@ -4,6 +4,7 @@ const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 
 const { sign } = require('jsonwebtoken');
+const { validateToken } = require('../middlewares/AuthMiddleware');
 
 router.post('/register', async (req, res) => {
     const { fullName, email, password, address, phone } = req.body;
@@ -31,12 +32,16 @@ router.post('/login', async (req, res) => {
                 res.json({ status: 400, message: "Mật khẩu không đúng!" });
             }
             else {
-                const accessToken = sign({ email: user.email, id: user.id }, "importantsecret");
+                const accessToken = sign({ email: user.email, id: user.id, fullname: user.fullname, role: user.role }, "importantsecret");
                 res.json({ status: 200, message: "Đăng nhập thành công!", accessToken: accessToken });
             }
         })
     }
 });
+
+router.get('/auth', validateToken, async (req, res) => {
+    res.json(req.user);
+})
 
 
 
